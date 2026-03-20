@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+next: 16.2.0
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Keyword học được
+1. PPR (Partial Prerendering)
+PPR = render một phần trang trước (static), phần còn lại render sau (dynamic)
+[ Static UI ] + [ Dynamic data streaming sau ]
+- SSR (render tất cả runtime)
+- SSG (build trước toàn bộ)
+- Cách dùng: dùng <Suspense />
+2. dynamicIO
+dynamicIO = cách Next.js detect và xử lý data động
+3. Kysely - Một công cụ xây dựng truy vấn SQL kiểu an toàn và hỗ trợ tự động hoàn thành cho Typescript trên node.js.
+- Tương tự Prisma nhưng Prisma là ORM - Object Relation Mapping, làm việc với DB qua model giống như object -> High-level, Abstraction nhiều, không có SQL control
+- Còn Kysely viết SQL nhưng có TypeScript hỗ trợ -> Lowlevel, Abstraction ít, SQL control
+4. 
