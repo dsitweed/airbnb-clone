@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String
+  name          String?
+  emailVerified String?
+  avatar        String?
+  password      String?
+  favoriteIds   String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  accounts     Account[]
+  listings     Listing[]
+  reservations Reservation[]
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        String?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Listing {
+  id            String  @id @default(uuid())
+  title         String
+  description   String
+  imageSrc      String
+  category      String
+  roomCount     Int
+  bathroomCount Int
+  guestCount    Int
+  price         Float
+  country       String?
+  latlng        Int[]
+  region        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  reservations Reservation[]
+}
+
+model Reservation {
+  id         String   @id @default(uuid())
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
