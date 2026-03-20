@@ -12,4 +12,4 @@ dynamicIO = cách Next.js detect và xử lý data động
 3. Kysely - Một công cụ xây dựng truy vấn SQL kiểu an toàn và hỗ trợ tự động hoàn thành cho Typescript trên node.js.
 - Tương tự Prisma nhưng Prisma là ORM - Object Relation Mapping, làm việc với DB qua model giống như object -> High-level, Abstraction nhiều, không có SQL control
 - Còn Kysely viết SQL nhưng có TypeScript hỗ trợ -> Lowlevel, Abstraction ít, SQL control
-4. 
+4. Slot pattern. Vẫn chưa hiểu lắm, cần xem thêm (Pattern của Frontend)

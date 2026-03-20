@@ -1,19 +1,20 @@
+import Provider from '@/components/Provider';
+import NavBar from '@/components/layout/navbar';
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist_Mono, Inter } from 'next/font/google';
 import { extractRouterConfig } from 'uploadthing/server';
 
 import { uploadRouter } from './api/uploadthing/core';
-import Provider from './components/Provider';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+const inter = Inter({
+  variable: '--font-sans',
+  subsets: ['latin', 'vietnamese'],
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+  variable: '--font-mono',
   subsets: ['latin'],
 });
 
@@ -29,13 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="vi"
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <NextSSRPlugin routerConfig={extractRouterConfig(uploadRouter)} />
         <Provider>
-          <main>{children}</main>
+          <NavBar />
+          <main className="pt-24 pb-16 md:pt-28">{children}</main>
         </Provider>
       </body>
     </html>
