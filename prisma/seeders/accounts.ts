@@ -11,13 +11,13 @@ export async function seedAccounts(prisma: PrismaClient) {
       },
     },
     update: {
-      access_token: 'seed-token-alice',
+      accessToken: 'seed-token-alice',
     },
     create: {
       type: 'oauth',
       provider: SEED_META.provider,
       providerAccountId: 'alice',
-      access_token: 'seed-token-alice',
+      accessToken: 'seed-token-alice',
       userId: SEED_IDS.users.alice,
     },
   });

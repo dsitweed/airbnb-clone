@@ -13,6 +13,8 @@ dynamicIO = cách Next.js detect và xử lý data động
 - Tương tự Prisma nhưng Prisma là ORM - Object Relation Mapping, làm việc với DB qua model giống như object -> High-level, Abstraction nhiều, không có SQL control
 - Còn Kysely viết SQL nhưng có TypeScript hỗ trợ -> Lowlevel, Abstraction ít, SQL control
 4. Slot pattern. Vẫn chưa hiểu lắm, cần xem thêm (Pattern của Frontend)
+5. Better-auth
+- use 4 table for authentication: Session, User, Account, Verification
 
 ## Work with prisma + pnpm
 ```bash

@@ -7,13 +7,14 @@ export async function seedUsers(prisma: PrismaClient) {
     where: { id: SEED_IDS.users.alice },
     update: {
       name: 'Alice',
-      avatar: 'https://i.pravatar.cc/150?img=47',
+      image: 'https://i.pravatar.cc/150?img=47',
     },
     create: {
       id: SEED_IDS.users.alice,
       email: 'alice@example.com',
       name: 'Alice',
-      avatar: 'https://i.pravatar.cc/150?img=47',
+      emailVerified: false,
+      image: 'https://i.pravatar.cc/150?img=47',
       favoriteIds: [],
     },
   });
@@ -22,13 +23,14 @@ export async function seedUsers(prisma: PrismaClient) {
     where: { id: SEED_IDS.users.bob },
     update: {
       name: 'Bob',
-      avatar: 'https://i.pravatar.cc/150?img=12',
+      image: 'https://i.pravatar.cc/150?img=12',
     },
     create: {
       id: SEED_IDS.users.bob,
       email: 'bob@example.com',
       name: 'Bob',
-      avatar: 'https://i.pravatar.cc/150?img=12',
+      emailVerified: false,
+      image: 'https://i.pravatar.cc/150?img=12',
       favoriteIds: [],
     },
   });
