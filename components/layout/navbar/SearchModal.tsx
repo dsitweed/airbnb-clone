@@ -33,6 +33,8 @@ export default function SearchModal({ onCloseModal }: SearchModalProps) {
   const [step, setStep] = useState(STEPS.LOCALTION);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const { handleSubmit, setValue, control, getValues } = useForm<FieldValues>({
     defaultValues: {
@@ -138,6 +140,9 @@ export default function SearchModal({ onCloseModal }: SearchModalProps) {
                 className="w-full rounded-lg border"
                 mode="range"
                 captionLayout="dropdown"
+                disabled={{
+                  before: today,
+                }}
                 selected={dateRange}
                 onSelect={(value) => {
                   setCustomValue('dateRange', value);
