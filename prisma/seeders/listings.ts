@@ -34,7 +34,8 @@ export async function seedListings(prisma: PrismaClient) {
       id: SEED_IDS.listings.beachHouse,
       title: 'Beach House with Ocean View',
       description: 'Relax by the sea with a stunning ocean view.',
-      imageSrc: 'https://images.unsplash.com/photo-1505691723518-36a5ac3b2d97',
+      imageSrc:
+        'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=2070',
       category: 'house',
       roomCount: 3,
       bathroomCount: 2,

@@ -98,6 +98,10 @@ export const getListing = async ({
 };
 
 export const getListingId = async (id: string) => {
+  if (!id) {
+    return null;
+  }
+
   return prisma.listing.findUnique({
     where: { id },
     include: {
