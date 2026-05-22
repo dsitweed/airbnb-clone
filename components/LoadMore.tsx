@@ -1,5 +1,8 @@
+'use client';
+
 import { useLoadMore } from '@/hooks/useLoadMore';
 import { Listing } from '@/lib/generated/prisma/client';
+import { GetListingQuery } from '@/types/api';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 
@@ -12,7 +15,7 @@ interface LoadMoreResponse {
 
 interface LoadMoreProps {
   nextCursor: string;
-  fnArgs?: { [key: string]: string | undefined };
+  fnArgs: GetListingQuery;
   queryFn: (args: Record<string, string>) => Promise<LoadMoreResponse>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   queryKey: readonly any[];
@@ -27,7 +30,7 @@ export default function LoadMore({
   favorites,
 }: LoadMoreProps) {
   const baseArgs = Object.fromEntries(
-    Object.entries(fnArgs ?? {}).filter(([_, value]) => value !== undefined),
+    Object.entries(fnArgs ?? {}).filter(([, value]) => value !== undefined),
   ) as Record<string, string>;
 
   const { data, isFetchingNextPage, hasNextPage, status, fetchNextPage } =
