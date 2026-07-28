@@ -1,9 +1,9 @@
 import { Listing, Reservation } from '@/lib/generated/prisma/client';
 import { format } from 'date-fns';
-import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import HeartButton from './HeartButton';
 import { Card, CardContent, CardHeader } from './ui/card';
 import { Skeleton } from './ui/skeleton';
 
@@ -30,14 +30,8 @@ export default function ListingCard({
   return (
     <div className="relative">
       <div className="absolute top-0 left-0 z-10 flex w-full items-center justify-between p-3">
-        <div>Listing Menu</div>
         <div className="flex h-7 w-7 items-center justify-center">
-          <Heart
-            className="cursor-pointer hover:opacity-70"
-            color={hasFavorited ? 'white' : 'gray'}
-            fill={hasFavorited ? 'red' : 'gray'}
-            size={200}
-          />
+          <HeartButton listingId={data.id} hasFavorited={hasFavorited} />
         </div>
       </div>
       <Link href={`/listings/${data.id}`} className="col-span-1 cursor-pointer">

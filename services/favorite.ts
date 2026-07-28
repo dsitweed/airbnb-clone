@@ -1,3 +1,5 @@
+'use server';
+
 import prisma from '@/lib/prisma';
 import { UpdateFavoriteRequest } from '@/types/api';
 import { revalidatePath } from 'next/cache';
@@ -22,7 +24,7 @@ export const getFavorites = async () => {
   }
 };
 
-export const updateFavorites = async ({
+export const updateFavorite = async ({
   listingId,
   favorite,
 }: UpdateFavoriteRequest) => {

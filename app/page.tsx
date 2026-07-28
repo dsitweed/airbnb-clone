@@ -1,5 +1,5 @@
 import EmptyState from '@/components/EmptyState';
-import ListingCard from '@/components/ListingCardt';
+import ListingCard from '@/components/ListingCard';
 import LoadMore from '@/components/LoadMore';
 import { getFavorites } from '@/services/favorite';
 import { getListing } from '@/services/listing';
@@ -7,11 +7,12 @@ import { GetListingQuery } from '@/types/api';
 import { Suspense } from 'react';
 
 interface HomeProps {
-  searchParams: GetListingQuery;
+  searchParams: Promise<GetListingQuery>;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
-  const { listings, nextCursor } = await getListing(searchParams);
+  const params = await searchParams;
+  const { listings, nextCursor } = await getListing(params);
   const favorites = await getFavorites();
 
   if (!listings || listings.length === 0) {
@@ -27,7 +28,7 @@ export default async function Home({ searchParams }: HomeProps) {
   }
 
   return (
-    <section className="grid grid-cols-2 gap-4 pt-16 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+    <section className="main-container grid grid-cols-2 gap-4 pt-16 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8">
       {listings.map((listing) => (
         <div key={`listing-card-${listing.id}`}>
           <ListingCard
@@ -41,9 +42,9 @@ export default async function Home({ searchParams }: HomeProps) {
         <Suspense>
           <LoadMore
             nextCursor={nextCursor}
-            fnArgs={searchParams}
+            fnArgs={params}
             queryFn={getListing}
-            queryKey={['listings', searchParams]}
+            queryKey={['listings', params]}
             favorites={favorites}
           />
         </Suspense>

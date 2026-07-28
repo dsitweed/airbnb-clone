@@ -49,9 +49,9 @@ export default function Search() {
       <DialogTrigger asChild name="search">
         <Button
           variant="outline"
-          className="w-full cursor-pointer rounded-full border py-5 shadow-sm transition duration-300 hover:shadow-md md:w-auto"
+          className="flex-1 cursor-pointer rounded-full border py-5 shadow-sm transition duration-300 hover:shadow-md sm:flex-none md:w-auto"
         >
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex w-full flex-row items-center justify-between">
             <small className="px-6 text-sm font-bold">
               {country ? country : 'Nơi nào đó'}
             </small>

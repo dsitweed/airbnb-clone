@@ -1,6 +1,8 @@
 import EmptyState from '@/components/EmptyState';
 import { getListingId } from '@/services/listing';
 
+import ListingHead from './_components/ListingHead';
+
 interface IParams {
   params: Promise<{
     listingId: string;
@@ -23,5 +25,15 @@ export default async function ListingPage(props: IParams) {
     );
   }
 
-  return <div>{listingData.id}</div>;
+  return (
+    <section className="main-container">
+      <ListingHead
+        title={listingData.title}
+        country={listingData.country}
+        region={listingData.region}
+        image={listingData.imageSrc}
+        id={listingData.id}
+      />
+    </section>
+  );
 }

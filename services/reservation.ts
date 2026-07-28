@@ -1,3 +1,5 @@
+'use server';
+
 import { Listing, Prisma, Reservation } from '@/lib/generated/prisma/client';
 import prisma from '@/lib/prisma';
 import { CreatePaymentSessionRequest, GetReservationQuery } from '@/types/api';

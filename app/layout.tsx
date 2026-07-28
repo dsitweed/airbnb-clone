@@ -1,4 +1,4 @@
-import Provider from '@/components/Provider';
+import Providers from '@/components/Providers';
 import NavBar from '@/components/layout/navbar';
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import type { Metadata } from 'next';
@@ -35,10 +35,10 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <NextSSRPlugin routerConfig={extractRouterConfig(uploadRouter)} />
-        <Provider>
+        <Providers>
           <NavBar />
           <main className="pt-24 pb-16 md:pt-28">{children}</main>
-        </Provider>
+        </Providers>
       </body>
     </html>
   );

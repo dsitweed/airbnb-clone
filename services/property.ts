@@ -1,3 +1,5 @@
+'use server';
+
 import { Prisma } from '@/lib/generated/prisma/client';
 import prisma from '@/lib/prisma';
 import { GetPropertyQuery } from '@/types/api';
