@@ -29,7 +29,7 @@ export default function Counter({
 
   return (
     <div className="flex flex-row items-center justify-between">
-      <div className="flex flex-row">
+      <div className="flex flex-col">
         <h3 className="font-semibold">{title}</h3>
         <p className="font-light text-gray-600">{subtitle}</p>
       </div>
@@ -46,7 +46,7 @@ export default function Counter({
         </div>
         <button
           type="button"
-          onClick={onReduce}
+          onClick={onAdd}
           className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-neutral-400 text-neutral-600 transition hover:opacity-80"
           autoFocus={title === 'Guests'}
         >

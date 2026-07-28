@@ -50,7 +50,11 @@ export default function UserMenu({ user }: UserMenuProps) {
               {user ? 'Share your home' : 'Login'}
             </Button>
           </DialogTrigger>
-          {dialogType === 'share' && <ShareYourHomeModal />}
+          {dialogType === 'share' && (
+            <ShareYourHomeModal
+              onCloseModal={() => console.log('close modal')}
+            />
+          )}
           {dialogType === 'login' && <LoginModal />}
           {dialogType === 'signup' && <SignupModal />}
         </Dialog>

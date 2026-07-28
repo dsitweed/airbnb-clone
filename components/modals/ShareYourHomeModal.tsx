@@ -28,12 +28,12 @@ interface ShareYourHomeModalProps {
 }
 
 const steps = {
-  '0': 'category',
-  '1': 'location',
-  '2': 'guestCount',
-  '3': 'image',
-  '4': 'title',
-  '5': 'price',
+  '0': ['category'],
+  '1': ['location'],
+  '2': ['guestCount'],
+  '3': ['image'],
+  '4': ['title', 'description'],
+  '5': ['price'],
 };
 
 enum STEPS {
@@ -67,7 +67,8 @@ export default function ShareYourHomeModal({
       guestCount: 1,
       bathroomCount: 1,
       roomCount: 1,
-      image: '',
+      image:
+        'https://static.vecteezy.com/system/resources/thumbnails/054/876/032/small/mirror-image-snow-capped-mountain-peaks-reflected-in-pristine-lake-free-photo.jpg',
       price: '',
       title: '',
       description: '',
@@ -196,6 +197,7 @@ export default function ShareYourHomeModal({
               id="title"
               aria-label="Title"
               disabled={isLoading}
+              onChange={(event) => setCustomValue('title', event.target.value)}
               required
               autoFocus
             />
@@ -204,6 +206,9 @@ export default function ShareYourHomeModal({
               id="description"
               aria-label="Description"
               disabled={isLoading}
+              onChange={(event) =>
+                setCustomValue('description', event.target.value)
+              }
               required
               autoFocus
             />
@@ -217,10 +222,12 @@ export default function ShareYourHomeModal({
               subTitle="How much do you charge per night?"
             />
             <Input
+              type="number"
               key="price"
               id="price"
               aria-label="Price"
               disabled={isLoading}
+              onChange={(event) => setCustomValue('price', event.target.value)}
               required
               autoFocus
             />
@@ -249,10 +256,10 @@ export default function ShareYourHomeModal({
     }
   };
 
-  const isFieldFilled = !!getValues(steps[step]);
+  const isFieldFilled = getValues(steps[step]).every((value) => !!value);
 
   return (
-    <DialogContent>
+    <DialogContent className="sm:max-w-lg">
       <DialogHeader>
         <DialogTitle className="text-center">Share your home</DialogTitle>
       </DialogHeader>
@@ -261,29 +268,33 @@ export default function ShareYourHomeModal({
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="relative p-6">{body()}</div>
-      </form>
-      <DialogFooter className="flex flex-col gap-2 px-6 pt-3 pb-6">
-        <div className="flex w-full flex-row items-center gap-4">
-          {step !== STEPS.CATEGORY ? (
+        <DialogFooter className="flex flex-col gap-2 px-6 pt-3 pb-6">
+          <div className="flex w-full flex-row items-center gap-4">
+            {step !== STEPS.CATEGORY ? (
+              <Button
+                type="button"
+                className="flex items-center justify-center gap-2"
+                onClick={onBack}
+              >
+                Back
+              </Button>
+            ) : null}
             <Button
-              type="button"
+              type="submit"
               className="flex items-center justify-center gap-2"
-              onClick={onBack}
+              disabled={isLoading || !isFieldFilled}
             >
-              Back
+              {isLoading ? (
+                <FaSpinner className="animate-spin" />
+              ) : step === STEPS.PRICE ? (
+                'Create'
+              ) : (
+                'Next'
+              )}
             </Button>
-          ) : null}
-          <Button>
-            {isLoading ? (
-              <FaSpinner />
-            ) : step === STEPS.PRICE ? (
-              'Create'
-            ) : (
-              'Next'
-            )}
-          </Button>
-        </div>
-      </DialogFooter>
+          </div>
+        </DialogFooter>
+      </form>
     </DialogContent>
   );
 }
