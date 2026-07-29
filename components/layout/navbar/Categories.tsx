@@ -2,15 +2,18 @@
 
 import { cn, throttle } from '@/lib/utils';
 import { categories } from '@/utils/constants';
+import useEmblaCarousel from 'embla-carousel-react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import 'swiper/css';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 import CategoryBox from './CategoryBox';
 
 export default function Categories() {
   const [isActive, setIsActive] = useState(false);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    dragFree: true,
+    align: 'start',
+  });
 
   const params = useSearchParams();
   const pathName = usePathname();
@@ -19,21 +22,37 @@ export default function Categories() {
   const isMainPage = pathName === '/';
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsActive(true);
-      } else {
-        setIsActive(false);
-      }
-    };
+    const handleScroll = () => setIsActive(window.scrollY > 0);
 
     const throttledHandleScroll = throttle(handleScroll, 150);
 
+    handleScroll();
     window.addEventListener('scroll', throttledHandleScroll);
+
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const update = () => {
+      const scrollable = emblaApi.canScrollNext() || emblaApi.canScrollPrev();
+      emblaApi.reInit({
+        watchDrag: scrollable,
+        dragFree: true,
+        align: 'start',
+      });
+    };
+    emblaApi.on('resize', update);
+    update();
+
+    return () => {
+      emblaApi.off('resize', update);
+    };
+  }, [emblaApi]);
+
   if (!isMainPage) {
-    return;
+    return null;
   }
 
   return (
@@ -43,23 +62,25 @@ export default function Categories() {
         isActive && 'shadow-md shadow-amber-100',
       )}
     >
-      <Swiper
-        slidesPerView="auto"
-        pagination={{
-          clickable: true,
-        }}
-        className="main-container mt-2 px-2 lg:px-3"
+      <div
+        className="embla main-container mt-2 overflow-hidden px-2 lg:px-3"
+        ref={emblaRef}
       >
-        {categories.map((category) => (
-          <SwiperSlide key={category.label} className="max-w-fit">
-            <CategoryBox
-              label={category.label}
-              icon={category.icon}
-              selected={currentCategory === category.label}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <div className="embla__container flex">
+          {categories.map((category) => (
+            <div
+              className="embla__slide min-w-0 shrink-0 grow-0 basis-auto"
+              key={category.label}
+            >
+              <CategoryBox
+                label={category.label}
+                icon={category.icon}
+                selected={currentCategory === category.label}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
