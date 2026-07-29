@@ -198,6 +198,9 @@ export default function SearchModal({ onCloseModal }: SearchModalProps) {
               value={location}
               onChange={(value) => setCustomValue('location', value)}
             />
+            <div className="h-60">
+              <Map center={location?.latlng} />
+            </div>
           </div>
         );
     }
