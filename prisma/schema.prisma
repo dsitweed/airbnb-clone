@@ -38,8 +38,8 @@ model Session {
   ipAddress String?
   userAgent String?
 
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
@@ -49,9 +49,8 @@ model Session {
 
 model Account {
   id                    String    @id @default(uuid())
-  type                  String
-  provider              String
-  providerAccountId     String
+  providerId            String
+  accountId             String
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -60,13 +59,13 @@ model Account {
   scope                 String?
   password              String?
 
-  tokenType    String? // token_type, session_state, expries_at, token_type github logic
-  sessionState String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
+  @@unique([providerId, accountId])
 }
 
 model Verification {

@@ -1,11 +1,10 @@
 'use client';
 
-import LoginModal from '@/components/modals/LoginModal';
+import AuthModal from '@/components/modals/AuthModal';
 import ShareYourHomeModal from '@/components/modals/ShareYourHomeModal';
-import SignupModal from '@/components/modals/SignupModal';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,12 +13,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { signOut } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 import { menuItems } from '@/utils/constants';
 import { User } from 'better-auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { toast } from 'sonner';
 
 interface UserMenuProps {
   user: User | undefined;
@@ -35,6 +37,21 @@ export default function UserMenu({ user }: UserMenuProps) {
     router.push(url);
   };
 
+  const handleLogOut = async () => {
+    try {
+      await signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            redirect('/');
+            router.refresh();
+          },
+        },
+      });
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -45,36 +62,41 @@ export default function UserMenu({ user }: UserMenuProps) {
           <DialogTrigger asChild name="share">
             <Button
               variant="ghost"
-              onClick={() => setDialogType(!user ? 'share' : 'login')}
+              onClick={() => setDialogType(user ? 'share' : 'login')}
             >
               {user ? 'Share your home' : 'Login'}
             </Button>
           </DialogTrigger>
           {dialogType === 'share' && (
-            <ShareYourHomeModal
-              onCloseModal={() => console.log('close modal')}
-            />
+            <ShareYourHomeModal onCloseModal={() => setDialogType(null)} />
           )}
-          {dialogType === 'login' && <LoginModal />}
-          {dialogType === 'signup' && <SignupModal />}
+          {dialogType === 'login' && (
+            <AuthModal name="login" onCloseModal={() => setDialogType(null)} />
+          )}
         </Dialog>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="lg" className="rounded-full">
+            <Button
+              variant="outline"
+              size={user ? 'lg' : 'icon-lg'}
+              className={cn('rounded-full', user && 'gap-3 px-2')}
+            >
               <AiOutlineMenu />
               <div className="hidden md:block">
-                <Avatar>
-                  <AvatarImage
-                    src={
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupSKjnCIs8Z8mbmI3Nm1Huhj_wEEm-BQo522KiZjAg&s=10'
-                    }
-                  />
-                </Avatar>
+                {user && (
+                  <Avatar>
+                    <AvatarImage
+                      src={
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupSKjnCIs8Z8mbmI3Nm1Huhj_wEEm-BQo522KiZjAg&s=10'
+                      }
+                    />
+                  </Avatar>
+                )}
               </div>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {!user ? (
+            {user ? (
               <>
                 <DropdownMenuGroup className="flex flex-col gap-2">
                   {menuItems.map((menuItem) => (
@@ -86,7 +108,12 @@ export default function UserMenu({ user }: UserMenuProps) {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>Log out</DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={handleLogOut}
+                  >
+                    Log out
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
               </>
             ) : (
