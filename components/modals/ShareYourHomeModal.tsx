@@ -21,6 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '../ui/dialog';
+import { Field, FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
 
 interface ShareYourHomeModalProps {
@@ -31,7 +32,7 @@ const steps = {
   '0': ['category'],
   '1': ['location'],
   '2': ['guestCount'],
-  '3': ['image'],
+  '3': ['imageSrc'],
   '4': ['title', 'description'],
   '5': ['price'],
 };
@@ -67,7 +68,7 @@ export default function ShareYourHomeModal({
       guestCount: 1,
       bathroomCount: 1,
       roomCount: 1,
-      image:
+      imageSrc:
         'https://static.vecteezy.com/system/resources/thumbnails/054/876/032/small/mirror-image-snow-capped-mountain-peaks-reflected-in-pristine-lake-free-photo.jpg',
       price: '',
       title: '',
@@ -104,10 +105,16 @@ export default function ShareYourHomeModal({
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (step !== STEPS.PRICE) return onNext();
+    const { location: _location, ...rest } = data;
+    const listingData = {
+      ...rest,
+      price: Number(rest.price),
+      latlng: location.latlng,
+    };
 
     startTransition(async () => {
       try {
-        const newListing = await createListing(data);
+        const newListing = await createListing(listingData);
         toast.success(`${data.title} added successfully`);
         queryClient.invalidateQueries({
           queryKey: ['listings'],
@@ -193,25 +200,34 @@ export default function ShareYourHomeModal({
               title="How would you describe your place?"
               subTitle="Short and sweet works best!"
             />
-            <Input
-              id="title"
-              aria-label="Title"
-              disabled={isLoading}
-              onChange={(event) => setCustomValue('title', event.target.value)}
-              required
-              autoFocus
-            />
-            <br />
-            <Input
-              id="description"
-              aria-label="Description"
-              disabled={isLoading}
-              onChange={(event) =>
-                setCustomValue('description', event.target.value)
-              }
-              required
-              autoFocus
-            />
+            <Field>
+              <FieldLabel htmlFor="title">Title</FieldLabel>
+              <Input
+                id="title"
+                aria-label="Title"
+                disabled={isLoading}
+                value={watch('title')}
+                onChange={(event) =>
+                  setCustomValue('title', event.target.value)
+                }
+                required
+                autoFocus
+              />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="description">Description</FieldLabel>
+              <Input
+                id="description"
+                aria-label="Description"
+                disabled={isLoading}
+                value={watch('description')}
+                onChange={(event) =>
+                  setCustomValue('description', event.target.value)
+                }
+                required
+                autoFocus
+              />
+            </Field>
           </div>
         );
       case STEPS.PRICE:
@@ -221,16 +237,22 @@ export default function ShareYourHomeModal({
               title="Now, set your price"
               subTitle="How much do you charge per night?"
             />
-            <Input
-              type="number"
-              key="price"
-              id="price"
-              aria-label="Price"
-              disabled={isLoading}
-              onChange={(event) => setCustomValue('price', event.target.value)}
-              required
-              autoFocus
-            />
+            <Field>
+              <FieldLabel htmlFor="price">Price</FieldLabel>
+              <Input
+                type="number"
+                key="price"
+                id="price"
+                aria-label="Price"
+                disabled={isLoading}
+                value={watch('price')}
+                onChange={(event) =>
+                  setCustomValue('price', event.target.value)
+                }
+                required
+                autoFocus
+              />
+            </Field>
           </div>
         );
       default:
