@@ -17,7 +17,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
   if (!listings || listings.length === 0) {
     return (
-      <div className="flex justify-center">
+      <div className="main-container flex justify-center">
         <EmptyState
           title="No Listings found"
           subTitle="Looks like you have no properties."
@@ -28,7 +28,7 @@ export default async function Home({ searchParams }: HomeProps) {
   }
 
   return (
-    <section className="main-container grid grid-cols-2 gap-4 pt-16 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+    <section className="main-container grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8">
       {listings.map((listing) => (
         <div key={`listing-card-${listing.id}`}>
           <ListingCard

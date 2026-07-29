@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/services/user';
 import { Suspense } from 'react';
 
+import Categories from './Categories';
 import Logo from './Logo';
 import Search from './Search';
 import UserMenu from './UserMenu';
@@ -22,7 +23,7 @@ export default async function NavBar(props: NavBarProps) {
           <UserMenu user={user} />
         </div>
       </nav>
-      {/* Categories */}
+      <Categories />
     </header>
   );
 }

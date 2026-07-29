@@ -38,7 +38,7 @@ export default function RootLayout({
         <NextSSRPlugin routerConfig={extractRouterConfig(uploadRouter)} />
         <Providers>
           <NavBar />
-          <main className="pt-24 pb-16 md:pt-28">{children}</main>
+          <main className="pt-38 pb-16">{children}</main>
         </Providers>
       </body>
     </html>
