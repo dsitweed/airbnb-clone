@@ -104,7 +104,12 @@ export default function UserMenu({ user }: UserMenuProps) {
                       <Link href={menuItem.path}>{menuItem.label}</Link>
                     </DropdownMenuItem>
                   ))}
-                  <DropdownMenuItem>Share your home</DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => setDialogType('share')}
+                  >
+                    Share your home
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
