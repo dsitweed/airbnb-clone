@@ -12,7 +12,7 @@ import { differenceInDays, formatDistance } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import { SearchSlash } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import SearchModal from './SearchModal';
 
@@ -24,6 +24,8 @@ export default function Search() {
   const endDate = searchParams.get('to');
   const guestCount = searchParams.get('guestCount');
   const guestLabel = guestCount ? `${guestCount} khách` : 'Thêm khách';
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const durationLabel = useMemo(() => {
     if (startDate && endDate) {
@@ -45,11 +47,15 @@ export default function Search() {
   }, [endDate, startDate]);
 
   return (
-    <Dialog>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(open) => !open && setIsDialogOpen(false)}
+    >
       <DialogTrigger asChild name="search">
         <Button
           variant="outline"
           className="flex-1 cursor-pointer rounded-full border py-5 shadow-sm transition duration-300 hover:shadow-md sm:flex-none md:w-auto"
+          onClick={() => setIsDialogOpen(true)}
         >
           <div className="flex w-full flex-row items-center justify-between">
             <small className="px-6 text-sm font-bold">
@@ -75,7 +81,7 @@ export default function Search() {
             Tìm kiếm chỗ ở, trải nghiệm và địa điểm
           </DialogTitle>
         </DialogHeader>
-        <SearchModal onCloseModal={() => console.log(123)} />
+        <SearchModal onCloseModal={() => setIsDialogOpen(false)} />
       </DialogContent>
     </Dialog>
   );

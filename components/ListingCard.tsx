@@ -29,7 +29,7 @@ export default function ListingCard({
 
   return (
     <div className="relative">
-      <div className="absolute top-0 left-0 z-10 flex w-full items-center justify-between p-3">
+      <div className="absolute top-0 right-0 z-10 flex items-center p-3">
         <div className="flex h-7 w-7 items-center justify-center">
           <HeartButton listingId={data.id} hasFavorited={hasFavorited} />
         </div>
