@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { signOut } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
-import { menuItems } from '@/utils/constants';
+import { DEFAULT_AVATAR_URL, menuItems } from '@/utils/constants';
 import { User } from 'better-auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -85,11 +85,7 @@ export default function UserMenu({ user }: UserMenuProps) {
               <div className="hidden md:block">
                 {user && (
                   <Avatar>
-                    <AvatarImage
-                      src={
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupSKjnCIs8Z8mbmI3Nm1Huhj_wEEm-BQo522KiZjAg&s=10'
-                      }
-                    />
+                    <AvatarImage src={DEFAULT_AVATAR_URL} />
                   </Avatar>
                 )}
               </div>

@@ -10,21 +10,21 @@ import { toast } from 'sonner';
 
 interface HeartButtonProps {
   listingId: string;
-  hasFavorited: boolean;
+  isFavorite: boolean;
 }
 
 export default function HeartButton({
   listingId,
-  hasFavorited: initialValue,
+  isFavorite: initialValue,
 }: HeartButtonProps) {
   const { data } = useSession();
-  const [hasFavorited, setHasFavorited] = useState(initialValue);
-  const hasFavoritedRef = useRef(initialValue);
+  const [isFavorite, setIsFavorite] = useState(initialValue);
+  const isFavoriteRef = useRef(initialValue);
   const { mutate } = useMutation({
     mutationFn: updateFavorite,
     onError: () => {
-      hasFavoritedRef.current = !hasFavoritedRef.current;
-      setHasFavorited(hasFavoritedRef.current);
+      isFavoriteRef.current = !isFavoriteRef.current;
+      setIsFavorite(isFavoriteRef.current);
       toast.error('Failed to favorite');
     },
   });
@@ -42,9 +42,9 @@ export default function HeartButton({
       return;
     }
 
-    debouncedUpdateFavorite(hasFavoritedRef.current);
-    hasFavoritedRef.current = !hasFavoritedRef.current;
-    setHasFavorited((prev) => !prev);
+    debouncedUpdateFavorite(!isFavoriteRef.current);
+    isFavoriteRef.current = !isFavoriteRef.current;
+    setIsFavorite((prev) => !prev);
   };
 
   return (
@@ -58,7 +58,7 @@ export default function HeartButton({
       />
       <AiFillHeart
         size={24}
-        className={cn(hasFavorited ? 'fill-rose-500' : 'fill-neutral-600')}
+        className={cn(isFavorite ? 'fill-rose-500' : 'fill-neutral-600')}
       />
     </button>
   );

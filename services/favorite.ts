@@ -41,18 +41,18 @@ export const updateFavorite = async ({
     }
 
     let newFavorites: string[] = [];
-    let hasFavorited: boolean = false;
+    let isFavorite: boolean = false;
 
     if (!favorite) {
       newFavorites = favorites.filter((id) => id !== listingId);
-      hasFavorited = false;
+      isFavorite = false;
     } else {
       if (favorites.includes(listingId)) {
         newFavorites = [...favorites];
       } else {
         newFavorites = [listingId, ...favorites];
       }
-      hasFavorited = true;
+      isFavorite = true;
     }
 
     await prisma.user.update({
@@ -65,7 +65,7 @@ export const updateFavorite = async ({
     revalidatePath('/favorites');
 
     return {
-      hasFavorited,
+      isFavorite,
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {

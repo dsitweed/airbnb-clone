@@ -15,6 +15,8 @@ import { MdOutlineVilla } from 'react-icons/md';
 import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
 
 export const LISTINGS_BATCH = 16;
+export const DEFAULT_AVATAR_URL =
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNupSKjnCIs8Z8mbmI3Nm1Huhj_wEEm-BQo522KiZjAg&s=10';
 
 export const menuItems = [
   {

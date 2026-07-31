@@ -165,4 +165,6 @@ export const createPaymentSession = async ({
   if (!currentUser) {
     throw new Error('Please log in to reserve!');
   }
+
+  return { url: 'fake string' };
 };

@@ -53,11 +53,11 @@ export default function LoadMore({
       {data?.pages.map((group, i) => (
         <React.Fragment key={i}>
           {group.listings.map((listing) => {
-            const hasFavorited = favorites.includes(listing.id);
+            const isFavorite = favorites.includes(listing.id);
             return (
               <div key={listing.id}>
                 {/* FIXME */}
-                TEST <p>{hasFavorited ? 'like' : 'not like'}</p>
+                TEST <p>{isFavorite ? 'like' : 'not like'}</p>
               </div>
             );
           })}

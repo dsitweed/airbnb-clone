@@ -10,13 +10,13 @@ import { Skeleton } from './ui/skeleton';
 interface ListingCardProps {
   data: Listing;
   reservation?: Reservation;
-  hasFavorited: boolean;
+  isFavorite: boolean;
 }
 
 export default function ListingCard({
   data,
   reservation,
-  hasFavorited,
+  isFavorite,
 }: ListingCardProps) {
   const price = reservation ? reservation.totalPrice : data.price;
   let reservationDate;
@@ -31,7 +31,7 @@ export default function ListingCard({
     <div className="relative">
       <div className="absolute top-0 right-0 z-10 flex items-center p-3">
         <div className="flex h-7 w-7 items-center justify-center">
-          <HeartButton listingId={data.id} hasFavorited={hasFavorited} />
+          <HeartButton listingId={data.id} isFavorite={isFavorite} />
         </div>
       </div>
       <Link href={`/listings/${data.id}`} className="col-span-1 cursor-pointer">

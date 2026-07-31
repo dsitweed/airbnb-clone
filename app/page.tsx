@@ -33,7 +33,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <div key={`listing-card-${listing.id}`}>
           <ListingCard
             data={listing}
-            hasFavorited={favorites.includes(listing.id)}
+            isFavorite={favorites.includes(listing.id)}
           />
         </div>
       ))}

@@ -19,7 +19,7 @@ export default async function ListingHead({
   id,
 }: ListingHeadProps) {
   const favorites = await getFavorites();
-  const hasFavorited = favorites.includes(id);
+  const isFavorite = favorites.includes(id);
 
   return (
     <>
@@ -33,7 +33,7 @@ export default async function ListingHead({
           sizes="100vw"
         />
         <div className="absolute top-5 right-5">
-          <HeartButton listingId={id} hasFavorited={hasFavorited} />
+          <HeartButton listingId={id} isFavorite={isFavorite} />
         </div>
       </div>
     </>
