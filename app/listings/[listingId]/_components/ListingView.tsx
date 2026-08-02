@@ -37,7 +37,7 @@ export default function ListingView({
 
   const dayCount =
     dateRange.from && dateRange.to
-      ? differenceInCalendarDays(dateRange.from, dateRange.to)
+      ? differenceInCalendarDays(dateRange.to, dateRange.from)
       : 0;
   const totalPrice = (dayCount + 1) * price;
 
@@ -79,6 +79,7 @@ export default function ListingView({
         } else {
           toast.error('Create reservation failed!');
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         toast.error(error?.message);
       }
