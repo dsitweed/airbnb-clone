@@ -8,6 +8,15 @@
 @custom-variant dark (&:is(.dark *));
 @source "../node_modules/@uploadthing/react/dist";
 
+html {
+  scrollbar-gutter: stable;
+}
+
+html body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
