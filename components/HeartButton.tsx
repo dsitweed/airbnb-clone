@@ -4,7 +4,7 @@ import { useSession } from '@/lib/auth-client';
 import { cn, debounce } from '@/lib/utils';
 import { updateFavorite } from '@/services/favorite';
 import { useMutation } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { toast } from 'sonner';
 
@@ -19,22 +19,25 @@ export default function HeartButton({
 }: HeartButtonProps) {
   const { data } = useSession();
   const [isFavorite, setIsFavorite] = useState(initialValue);
-  const isFavoriteRef = useRef(initialValue);
+
   const { mutate } = useMutation({
     mutationFn: updateFavorite,
     onError: () => {
-      isFavoriteRef.current = !isFavoriteRef.current;
-      setIsFavorite(isFavoriteRef.current);
+      setIsFavorite((prev) => !prev);
       toast.error('Failed to favorite');
     },
   });
 
-  const debouncedUpdateFavorite = debounce((favorite: boolean) => {
-    mutate({
-      listingId,
-      favorite,
-    });
-  }, 300);
+  const debouncedUpdateFavorite = useMemo(
+    () =>
+      debounce((favorite: boolean) => {
+        mutate({
+          listingId,
+          favorite,
+        });
+      }, 300),
+    [mutate, listingId],
+  );
 
   const handleClick = () => {
     if (!data?.user) {
@@ -42,9 +45,9 @@ export default function HeartButton({
       return;
     }
 
-    debouncedUpdateFavorite(!isFavoriteRef.current);
-    isFavoriteRef.current = !isFavoriteRef.current;
-    setIsFavorite((prev) => !prev);
+    const next = !isFavorite;
+    debouncedUpdateFavorite(next);
+    setIsFavorite(next);
   };
 
   return (

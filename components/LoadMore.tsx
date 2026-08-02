@@ -1,15 +1,18 @@
 'use client';
 
 import { useLoadMore } from '@/hooks/useLoadMore';
-import { Listing } from '@/lib/generated/prisma/client';
+import { Listing, Reservation } from '@/lib/generated/prisma/client';
 import { GetListingQuery } from '@/types/api';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { Skeleton } from './ui/skeleton';
+import ListingCard from './ListingCard';
+import PageLoading from './PageLoading';
 
 interface LoadMoreResponse {
-  listings: Listing[];
+  listings: (Listing & {
+    reservation?: Reservation;
+  })[];
   nextCursor: null | string;
 }
 
@@ -54,19 +57,24 @@ export default function LoadMore({
         <React.Fragment key={i}>
           {group.listings.map((listing) => {
             const isFavorite = favorites.includes(listing.id);
+
             return (
-              <div key={listing.id}>
-                {/* FIXME */}
-                TEST <p>{isFavorite ? 'like' : 'not like'}</p>
-              </div>
+              <ListingCard
+                key={listing.reservation?.id || listing.id}
+                data={listing}
+                isFavorite={isFavorite}
+                reservation={listing.reservation}
+              />
             );
           })}
         </React.Fragment>
       ))}
-      {(status === 'pending' || isFetchingNextPage) && (
-        <Skeleton>Loading</Skeleton>
+      {(status === 'pending' || isFetchingNextPage) && <PageLoading />}
+      {status === 'error' && (
+        <p className="mt-8 text-center text-xl font-semibold">
+          Something went wrong!
+        </p>
       )}
-      {status === 'error' && <p>Something went wrong!</p>}
       <div ref={ref} />
     </>
   );

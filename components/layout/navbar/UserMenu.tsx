@@ -18,7 +18,6 @@ import { cn } from '@/lib/utils';
 import { DEFAULT_AVATAR_URL, menuItems } from '@/utils/constants';
 import { User } from 'better-auth';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { toast } from 'sonner';
@@ -28,22 +27,16 @@ interface UserMenuProps {
 }
 
 export default function UserMenu({ user }: UserMenuProps) {
-  const router = useRouter();
   const [dialogType, setDialogType] = useState<
     'share' | 'login' | 'signup' | null
   >(null);
-
-  const redirect = (url: string) => {
-    router.push(url);
-  };
 
   const handleLogOut = async () => {
     try {
       await signOut({
         fetchOptions: {
           onSuccess: () => {
-            redirect('/');
-            router.refresh();
+            window.location.replace('/');
           },
         },
       });
@@ -73,6 +66,9 @@ export default function UserMenu({ user }: UserMenuProps) {
           )}
           {dialogType === 'login' && (
             <AuthModal name="login" onCloseModal={() => setDialogType(null)} />
+          )}
+          {dialogType === 'signup' && (
+            <AuthModal name="signup" onCloseModal={() => setDialogType(null)} />
           )}
         </Dialog>
         <DropdownMenu>
@@ -121,8 +117,12 @@ export default function UserMenu({ user }: UserMenuProps) {
             ) : (
               <>
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>Log in</DropdownMenuItem>
-                  <DropdownMenuItem>sign up</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setDialogType('login')}>
+                    Log in
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setDialogType('signup')}>
+                    Sign up
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
               </>
             )}
