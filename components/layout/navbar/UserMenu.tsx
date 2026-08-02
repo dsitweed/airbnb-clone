@@ -47,6 +47,7 @@ export default function UserMenu({ user }: UserMenuProps) {
           },
         },
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.message);
     }
@@ -91,7 +92,7 @@ export default function UserMenu({ user }: UserMenuProps) {
               </div>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="w-40">
             {user ? (
               <>
                 <DropdownMenuGroup className="flex flex-col gap-2">
