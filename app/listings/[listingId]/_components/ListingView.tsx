@@ -30,7 +30,6 @@ export default function ListingView({
   reservations,
   price,
   id,
-  title,
   user,
 }: ListingViewProps) {
   const [dateRange, setDateRange] = useState(initialDateRange);
@@ -40,7 +39,7 @@ export default function ListingView({
     dateRange.from && dateRange.to
       ? differenceInCalendarDays(dateRange.from, dateRange.to)
       : 0;
-  const totalPrice = dayCount * price;
+  const totalPrice = (dayCount + 1) * price;
 
   const router = useRouter();
   const disabledDates = useMemo(() => {
@@ -87,18 +86,14 @@ export default function ListingView({
   };
 
   return (
-    <div className="mt-6 grid grid-cols-1 md:grid-cols-7 md:gap-10">
-      <div className="order-first mb-10 md:order-last md:col-span-3">
-        <ListingReservation
-          price={123}
-          dateRange={dateRange}
-          totalPrice={0}
-          onChangeDate={setDateRange}
-          onSubmit={onCreateReservation}
-          disabledDates={disabledDates}
-          isLoading={isLoading}
-        />
-      </div>
-    </div>
+    <ListingReservation
+      price={price}
+      dateRange={dateRange}
+      totalPrice={totalPrice}
+      onChangeDate={setDateRange}
+      onSubmit={onCreateReservation}
+      disabledDates={disabledDates}
+      isLoading={isLoading}
+    />
   );
 }

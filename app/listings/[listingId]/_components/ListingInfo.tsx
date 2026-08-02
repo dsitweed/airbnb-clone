@@ -33,7 +33,7 @@ export default function ListingInfo({
   latlng,
 }: ListingInfoProps) {
   return (
-    <div className="col-span-4 flex flex-col gap-8">
+    <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2 text-base font-semibold">
           <span className="mr-1 flex items-center gap-2">

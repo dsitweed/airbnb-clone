@@ -14,6 +14,7 @@ import {
   type Locale,
   getDefaultClassNames,
 } from 'react-day-picker';
+import { enUS } from 'react-day-picker/locale';
 
 function Calendar({
   className,
@@ -21,7 +22,7 @@ function Calendar({
   showOutsideDays = true,
   captionLayout = 'label',
   buttonVariant = 'ghost',
-  locale,
+  locale = enUS,
   formatters,
   components,
   ...props

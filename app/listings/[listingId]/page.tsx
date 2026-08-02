@@ -53,24 +53,22 @@ export default async function ListingPage(props: IParams) {
         image={imageSrc}
         id={id}
       />
-      <ListingView
-        id={id}
-        title={title}
-        price={price}
-        user={currentUser}
-      />
-      <ListingInfo
-        user={{
-          image: currentUser?.image ?? null,
-          name: currentUser?.name ?? 'User',
-        }}
-        description={description}
-        guestCount={guestCount}
-        roomCount={roomCount}
-        bathroomCount={bathroomCount}
-        category={undefined}
-        latlng={latlng}
-      />
+
+      <div className="mt-6 grid grid-cols-2 gap-10">
+        <ListingInfo
+          user={{
+            image: currentUser?.image ?? null,
+            name: currentUser?.name ?? 'User',
+          }}
+          description={description}
+          guestCount={guestCount}
+          roomCount={roomCount}
+          bathroomCount={bathroomCount}
+          category={undefined}
+          latlng={latlng}
+        />
+        <ListingView id={id} title={title} price={price} user={currentUser} />
+      </div>
     </section>
   );
 }
