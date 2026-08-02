@@ -2,8 +2,7 @@
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { User } from '@/lib/generated/prisma/client';
-import { Category } from '@/types/common';
-import { DEFAULT_AVATAR_URL } from '@/utils/constants';
+import { DEFAULT_AVATAR_URL, categories } from '@/utils/constants';
 import { LatLngTuple } from 'leaflet';
 import dynamic from 'next/dynamic';
 
@@ -15,7 +14,7 @@ interface ListingInfoProps {
   guestCount: number;
   roomCount: number;
   bathroomCount: number;
-  category: Category | undefined;
+  categoryLabel: string;
   latlng: number[];
 }
 
@@ -29,9 +28,11 @@ export default function ListingInfo({
   guestCount,
   roomCount,
   bathroomCount,
-  category,
+  categoryLabel,
   latlng,
 }: ListingInfoProps) {
+  const category = categories.find((cate) => cate.label === categoryLabel);
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
@@ -50,6 +51,7 @@ export default function ListingInfo({
           <span>{guestCount} guests</span>
           <span>{roomCount} rooms</span>
           <span>{bathroomCount} bathrooms</span>
+          <span>{category?.label}</span>
         </div>
       </div>
       {category && (

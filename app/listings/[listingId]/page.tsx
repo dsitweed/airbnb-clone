@@ -39,7 +39,7 @@ export default async function ListingPage(props: IParams) {
     guestCount,
     roomCount,
     bathroomCount,
-    category,
+    category: categoryLabel,
     latlng,
     price,
   } = listingData;
@@ -64,7 +64,7 @@ export default async function ListingPage(props: IParams) {
           guestCount={guestCount}
           roomCount={roomCount}
           bathroomCount={bathroomCount}
-          category={undefined}
+          categoryLabel={categoryLabel}
           latlng={latlng}
         />
         <ListingView id={id} title={title} price={price} user={currentUser} />
